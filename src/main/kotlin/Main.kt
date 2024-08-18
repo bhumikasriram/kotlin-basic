@@ -1,19 +1,22 @@
-import com.thoughtworks.kotlin_basic.util.PrintUtil
+import com.thoughtworks.kotlin_basic.util.ConvertToLabel
 
-fun main(args: Array<String>) {
-    println("Hello World!")
-    println("Program arguments: ${args.joinToString()}")
+fun main() {
+    println("Enter the starting sequence number:")
+    val start = readLine()?.toIntOrNull()
+    val label=ConvertToLabel()
 
-    val printUtil = PrintUtil()
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
+    println("Enter the number of results:")
+    val count = readLine()?.toIntOrNull()
 
-    val headers = listOf("ID", "Name", "Occupation")
-    val rows = listOf(
-        listOf("1", "Alice", "Software Engineer"),
-        listOf("2", "Bob", "Data Scientist"),
-        listOf("3", "Charlie", "Product Manager")
-    )
+    if (start == null || count == null || start <= 0 || count <= 0) {
+        println("Invalid input. Please enter positive integers.")
+        return
+    }
 
-    printUtil.printTable(headers, rows)
+    try {
+        val result = label.numberToColumnLabel(start, count)
+        println("Generated column labels: ${result.joinToString(", ")}")
+    } catch (e: IllegalArgumentException) {
+        println("Error: ${e.message}")
+    }
 }
